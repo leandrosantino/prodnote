@@ -17,7 +17,7 @@ export class HttpServer {
   private readonly enableDatabaseBackup: boolean
   private readonly server: FastifyInstance
 
-  constructor (
+  constructor(
     private readonly backupService: BackupService,
     props: {
       port: number
@@ -35,10 +35,14 @@ export class HttpServer {
     this.server = fastify()
   }
 
-  startRoutes () {
+  startRoutes() {
     try {
       this.server.get('/', async (_, reply) => {
         await reply.sendFile('index.html')
+      })
+
+      this.server.get('/live', async (_, reply) => {
+        await reply.send('b71fbfbd-e735-4101-a5a3-3bd6b869d1f4')
       })
 
       this.server.setNotFoundHandler(async (_, reply) => {
@@ -52,7 +56,7 @@ export class HttpServer {
     }
   }
 
-  async startApi () {
+  async startApi() {
     try {
       const trpcPlaygroundPlugin = await getFastifyPlugin({
         router: appRouter,
@@ -76,7 +80,7 @@ export class HttpServer {
     }
   }
 
-  async configurePluguns () {
+  async configurePluguns() {
     try {
       await this.server.register(fastifyStatic, {
         root: this.staticsDirectory
@@ -93,7 +97,7 @@ export class HttpServer {
     }
   }
 
-  async startBackupService () {
+  async startBackupService() {
     try {
       await this.backupService.init()
       logger.info('start backup service successfully')
@@ -103,7 +107,7 @@ export class HttpServer {
     }
   }
 
-  async listen () {
+  async listen() {
     try {
       this.startRoutes()
       await this.startApi()

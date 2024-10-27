@@ -1,8 +1,8 @@
 import { type ReactNode, createContext, useState, useEffect } from 'react'
 import { Dialog } from '../components/dialog'
-import { Prompt } from '../components/dialog/Prompt'
 import { DialogCustom } from '../components/dialog/Custom'
 import { useLocation } from 'react-router-dom'
+import { Prompt } from '../components/dialog/prompt'
 
 export interface DialogProps {
   title: string

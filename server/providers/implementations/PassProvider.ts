@@ -1,5 +1,5 @@
 import { type IPassProvider } from '../interfaces/IPassProvider'
-import crypto from 'crypto'
+import crypto from 'node:crypto'
 
 export class PassProvider implements IPassProvider {
   private readonly algorithm = 'sha512'
@@ -15,4 +15,4 @@ export class PassProvider implements IPassProvider {
   }
 }
 
-console.log(new PassProvider().generate('PROD@adler'))
+// console.log(new PassProvider().generate('PROD@adler'))

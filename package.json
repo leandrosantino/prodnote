@@ -3,12 +3,11 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite --host",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
-    "server": "set IS_DEV=true && tsx watch ./server/index.ts config=./tsconfig.node.json",
-    "server.build": "set NODE_ENV=production && webpack",
-    "server.build-dev": "set NODE_ENV=development && webpack",
+    "dev": "bunx --bun vite --host",
+    "build": "bunx --bun vite build",
+    "preview": "bunx --bun vite preview",
+    "server": "bun run --watch ./server/index.ts",
+    "server.build": "bun build --compile --minify --target bun-windows-x64 ./server/index.ts --outfile ./dist/bin.exe",
     "commit": "git add . && cz && git push",
     "test": "jest",
     "lint-fix": "npx eslint --fix ./",
@@ -16,7 +15,7 @@
     "seed": "tsx --tsconfig ./server.tsconfig.json ./seed/index.ts",
     "db.studio": "prisma studio",
     "db.create": "prisma db push && npm run seed ",
-    "dist": "npm run build && npm run server.build && pkg ."
+    "dist": "bun run build && bun run server.build"
   },
   "bin": "./dist/index.js",
   "pkg": {
@@ -53,16 +52,15 @@
     "@trpc/react-query": "^10.29.1",
     "@trpc/server": "^10.29.1",
     "axios": "^1.4.0",
-    "better-sqlite3": "^9.3.0",
     "chalk": "^4.1.2",
     "dotenv": "^16.4.1",
     "fastify": "^4.17.0",
+    "ffi-napi": "^4.0.3",
     "file-saver": "^2.0.5",
     "handsontable": "^13.0.0",
     "js-file-download": "^0.4.12",
     "jsonwebtoken": "^9.0.0",
     "lucide-react": "^0.268.0",
-    "pkg": "^5.8.1",
     "prima": "^0.0.1",
     "puppeteer": "^20.7.4",
     "qrcode.react": "^3.1.0",
@@ -75,6 +73,7 @@
     "react-router-dom": "^6.11.2",
     "react-router-guarded-routes": "^0.4.5",
     "recharts": "^2.8.0",
+    "ref-napi": "^3.0.3",
     "styled-components": "^5.3.11",
     "trpc-playground": "^1.0.4",
     "zod": "^3.21.4"
@@ -86,6 +85,7 @@
     "@types/better-sqlite3": "^7.6.9",
     "@types/file-saver": "^2.0.5",
     "@types/handsontable": "^0.35.0",
+    "@types/bun": "^1.1.12",
     "@types/jest": "^29.5.2",
     "@types/jsonwebtoken": "^9.0.2",
     "@types/react": "^18.0.37",
@@ -123,6 +123,7 @@
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
+  "type": "module",
   "resolutions": {
     "@typescript-eslint/typescript-estree": "^5.59.11"
   }

@@ -66,7 +66,7 @@ export function OeeDashboard () {
           <div>
             <OeeValueCase>
               <span>OEE do {filters.day === 0 ? 'Mês' : 'Dia'}</span>
-              <span>{isLoading ? '00.0%' : (`${data?.oeeValue ?? '0.00'}%` ?? '00.0%')}</span>
+              <span>{isLoading ? '00.0%' : (`${data?.oeeValue || '0.00'}%` || '00.0%')}</span>
             </OeeValueCase>
           </div>
           <FiltersCase>

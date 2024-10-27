@@ -68,7 +68,7 @@ export function RegisterOEE () {
   } = registerOEEForm
 
   const processes = trpc.oee.getProcessesList.useQuery({
-    ute: watch().ute === '' ? undefined : watch().ute
+    ute: watch().ute.length == 0 ? undefined : watch().ute
   })
 
   const [isEditing, setIsEditing] = useState<boolean>(false)
@@ -204,8 +204,8 @@ export function RegisterOEE () {
 
   function clearForm () {
     setValue('date', '')
-    setValue('turn', '')
-    setValue('ute', '')
+    setValue('turn', '1')
+    setValue('ute', 'UTE-1')
     setValue('process', '')
     setValue('time', 0)
     setValue('piecesQuantity', 0)

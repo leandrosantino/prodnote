@@ -1,11 +1,12 @@
-import path from 'path'
-import { HttpServer } from './infra/server'
-import dotenv from 'dotenv'
-import { backupService } from './services/BackupService'
-dotenv.config()
+process.stdin.setRawMode(true);
+process.stdin.resume();
+import path from 'node:path'
+import { HttpServer } from './infra/server.ts'
+import { backupService } from './services/BackupService/index.ts'
+import { startControl } from './infra/startControl.ts'
 
-const port = process.env.PORT as string
-const isDev = process.env.IS_DEV as string
+const port = Number(Bun.env.PORT as string)
+const isDev = (Bun.env.IS_DEV as string) === 'true'
 
 if (!port) {
   throw Error('port is note defined')
@@ -14,13 +15,17 @@ if (!port) {
 const server = new HttpServer(
   backupService,
   {
-    enableDatabaseBackup: isDev === 'false',
+    enableDatabaseBackup: !isDev,
     apiEndpoint: '/api',
     playgroundEndpoint: '/playground',
-    port: Number(port),
-    staticsDirectory: path.join(__dirname, './static')
+    port: port,
+    staticsDirectory: path.join(process.cwd(), './static')
   }
 )
+
+if (!isDev) {
+  await startControl(port)
+}
 
 server.listen()
   .catch(console.log)

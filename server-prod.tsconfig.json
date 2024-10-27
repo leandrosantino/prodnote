@@ -1,7 +1,0 @@
-{
-  "extends": "./server.tsconfig.json",
-  "exclude": [
-    "server/**/*.spec.ts",
-    "seed"
-  ]
-}

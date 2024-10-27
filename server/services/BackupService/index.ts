@@ -6,9 +6,9 @@ dotenv.config()
 
 const databaseBackupHistoryRepository = new Repositories.DatabaseBackupHistory()
 
-const databaseBackupDir = process.env.DATABASE_BACKUP_DIR as string
-const databaseDir = process.env.DATABASE_URL_PRODUCTION as string
-const backupFrequencyInDays = process.env.BACKUP_FREQUENCY_IN_DAYS as string
+const databaseBackupDir = Bun.env.DATABASE_BACKUP_DIR as string
+const databaseDir = Bun.env.DATABASE_URL_PRODUCTION as string
+const backupFrequencyInDays = Bun.env.BACKUP_FREQUENCY_IN_DAYS as string
 
 if (!databaseBackupDir) {
   throw new Error('Database bakup directory is not defined!')

@@ -3,7 +3,7 @@ import { Repositories } from '../../infra/repositories'
 import dotenv from 'dotenv'
 dotenv.config()
 
-const CUTOFF = process.env.CUTOFF
+const CUTOFF = Bun.env.CUTOFF
 
 if (!CUTOFF) {
   throw new Error('CUTOFF is not defined')

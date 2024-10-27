@@ -1,14 +1,14 @@
 
 import { type IDatabaseBackupHistoryRepository } from '../../interfaces/IDatabaseBackupHistoryRepository'
-import fs from 'fs'
-import path from 'path'
+import fs from 'node:fs'
+import path from 'node:path'
 
 const SECONDS_IN_ONE_HOUR = 3600
 const SECONDS_IN_ONE_MILISECONDS = 1000
 const HOURS_IN_ONE_DAY = 24
 
 export class BackupService {
-  constructor (
+  constructor(
     private readonly databaseBackupHistoryRepository: IDatabaseBackupHistoryRepository,
     private readonly databaseBackupDir: string,
     private readonly databaseDir: string,
@@ -25,7 +25,7 @@ export class BackupService {
 
   backupIntervalInMiliseconds: number
 
-  async init () {
+  async init() {
     const history = await this.databaseBackupHistoryRepository.findMany()
 
     if (history.length === 0) {
@@ -56,17 +56,16 @@ export class BackupService {
     }, this.backupIntervalInMiliseconds - diffInMiliseconds)
   }
 
-  async runBackup () {
+  async runBackup() {
     try {
       const backupFilePath = path.join(
         this.databaseBackupDir,
-        `database_backup_${
-            new Date().toLocaleString()
-              .replace(', ', 'T')
-              .replace('/', '-')
-              .replace('/', '-')
-              .replace(':', '-')
-              .replace(':', '-')
+        `database_backup_${new Date().toLocaleString()
+          .replace(', ', 'T')
+          .replace('/', '-')
+          .replace('/', '-')
+          .replace(':', '-')
+          .replace(':', '-')
         }.db`
       )
 
